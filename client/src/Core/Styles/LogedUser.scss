@@ -1,0 +1,49 @@
+.__loged-user-info {
+    background-color: white;
+    position: relative;
+    height: 100vh;
+    width: 300px;
+    
+    .__avatar{
+        padding: 20px 0px 0px 20px;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .-user-name {
+        font-size: 16px;
+        font-weight: 400;
+        padding: 20px 0px 20px 0px;
+    }
+    
+
+    .__settings {
+        padding: 20px;
+    }
+    .__salom-info {
+        padding: 0px 20px 0px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        display: flex;
+        height: 80px;
+        width: 100%;
+        bottom: 0;
+
+        h6 {
+            font-size: 14px;
+            color: #707991;
+        }
+        span {
+            font-size: 14px;
+            font-weight: 300;
+            color: #676f84;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+    }
+}
