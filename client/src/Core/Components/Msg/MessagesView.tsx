@@ -15,7 +15,25 @@ const MessagesView = ({ chosenChat }: any) => {
     {
       id: 1,
       text: "Hello",
+      name: "reciever",
+      senderID: 1,
+      recieverID: 2,
+      sentDate: new Date(),
+      seen: false,
+    },
+    {
+      id: 1,
+      text: "Hello",
       name: "user",
+      senderID: 1000,
+      recieverID: 2,
+      sentDate: new Date(),
+      seen: false,
+    },
+    {
+      id: 1,
+      text: "Hello",
+      name: "reciever",
       senderID: 1,
       recieverID: 2,
       sentDate: new Date(),
@@ -33,7 +51,7 @@ const MessagesView = ({ chosenChat }: any) => {
       <div className="__msg-header">
         <span className="__reciever-name">
           {chosenChat.name}
-          <VerifiedIcon className="verified" />
+          {chosenChat.verified && <VerifiedIcon className="verified" />}
         </span>
         {chosenChat.isOnline && chosenChat.showOnlineStatus ? (
           <span style={{ color: "#e6005c" }}> Online</span>
@@ -49,7 +67,7 @@ const MessagesView = ({ chosenChat }: any) => {
             key={index}
             className="__msg-group-divider"
             style={{
-              justifyContent: message.name === "reciever" ? "start" : "end",
+              justifyContent: message.senderID === 1000 ? "start" : "end",
             }}
           >
             <div className="__message-design-sender">

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "pkg" : {
-    "assets" : "./src/db/salom.db"
+  "pkg": {
+    "assets": "./src/db/salom.db"
   },
   "scripts": {
     "server": "ts-node-dev --inspect --ignore-watch node_modules src/server.ts"
@@ -13,7 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/sqlite3": "^3.1.8",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",

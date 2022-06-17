@@ -31,8 +31,8 @@ const Sidebar = ({ chosenChat }: any) => {
       name: "Sulton",
       last: "How are you bro",
       time: "19:20 PM",
-      isOnline: false,
-      showOnlineStatus: false,
+      isOnline: true,
+      showOnlineStatus: true,
       verified: false,
     },
     {
