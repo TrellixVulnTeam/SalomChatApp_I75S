@@ -1,21 +1,31 @@
 import { Layout } from "./Core/Helpers";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Auth } from "./Core/Auth/Auth";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
+  const [logedUserData, SetLogedUserData] = useState<any>();
+
+  const setUserData = (userdata: any) => {
+    SetLogedUserData(userdata);
+  };
+
   const [auth, setAuth] = useState<any>(false);
-  const localStorageSavedUser: any = localStorage.getItem("passport");
-  const localUserAuth = JSON.parse(localStorageSavedUser);
+  const data = localStorage.getItem("uuid");
+  const AuthData = data ? data : [];
+
+  const Authanticated = (response: any) => {
+    setAuth(response);
+  };
 
   if (!auth) {
-    return <Auth />;
+    return <Auth setUserData={setUserData} Authanticated={Authanticated} />;
   }
 
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout />} />
+        <Route path="/" element={<Layout logedUserData={logedUserData} />} />
       </Routes>
     </div>
   );

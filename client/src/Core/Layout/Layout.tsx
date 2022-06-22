@@ -1,11 +1,11 @@
 import React from "react";
 import { AppHeader, Main } from "../Helpers";
 
-const Layout = () => {
+const Layout = ({ logedUserData }: any) => {
   return (
     <div>
       {/* <AppHeader /> */}
-      <Main />
+      <Main logedUserData={logedUserData} />
     </div>
   );
 };

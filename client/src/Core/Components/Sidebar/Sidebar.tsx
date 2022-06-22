@@ -7,7 +7,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { savedMessageImage } from "../../Helpers";
 
-const Sidebar = ({ chosenChat }: any) => {
+const Sidebar = ({ chosenChat, logedUserData }: any) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const Users: any[] = [
@@ -135,7 +135,9 @@ const Sidebar = ({ chosenChat }: any) => {
         <div className="__loged-user-info">
           <div className="__avatar">
             <Avatar />
-            <span className="-user-name">Name and Surname</span>
+            <span className="-user-name">
+              {logedUserData.Name || logedUserData.Username}
+            </span>
           </div>
           <Divider />
           <div className="__settings">...</div>

@@ -13,7 +13,11 @@ export const LoginStyle = {
   margin: "10px",
 };
 
-export const Login = ({ changeAuthStateToRegister }: any) => {
+export const Login = ({
+  changeAuthStateToRegister,
+  Authanticated,
+  setUserData,
+}: any) => {
   const [authantification, setAuthantification] = useState<auth>({
     username: "",
     password: "",
@@ -25,14 +29,29 @@ export const Login = ({ changeAuthStateToRegister }: any) => {
       [key]: newInput.target.value,
     });
   };
-  const navigate = useNavigate();
+  const token = localStorage.getItem("auth_token");
+  if (!token) return <>false</>;
 
-  const Login = () => {
-    Axios.post("http://localhost:3001/login", {
+  const Login = async () => {
+    await Axios.post("http://localhost:3001/login", {
       username: authantification.username,
       password: authantification.password,
     }).then((res) => {
-      console.log(res);
+      if (!res.data.auth) {
+        console.log("Wrong Password or Username!");
+        localStorage.setItem("auth_token", "Auth not found!");
+      } else {
+        Authanticated(res.data.auth);
+        const response = res.data.result[0];
+        const { id, Username, auth_pass } = response;
+        setUserData(res.data.result[0]);
+        localStorage.setItem(
+          "uuid",
+          JSON.stringify({ id: id, username: Username })
+        );
+        localStorage.setItem("auth_pwd", auth_pass);
+        localStorage.setItem("auth_token", res.data.token);
+      }
     });
   };
 

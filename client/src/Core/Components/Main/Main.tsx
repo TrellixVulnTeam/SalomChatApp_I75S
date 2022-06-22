@@ -9,9 +9,8 @@ export interface Contact {
   id: Number;
 }
 
-export const Main = () => {
+export const Main = ({ logedUserData }: any) => {
   const [choosenChat, setChoosenChat] = useState<Contact>();
-  console.table(choosenChat);
 
   const chosenChat = (user: any) => {
     setChoosenChat(user);
@@ -21,7 +20,7 @@ export const Main = () => {
     <div>
       <Grid container>
         <Grid item md={3}>
-          <Sidebar chosenChat={chosenChat} />
+          <Sidebar logedUserData={logedUserData} chosenChat={chosenChat} />
         </Grid>
         <Grid item md={9}>
           {!choosenChat ? <View /> : <MessagesView chosenChat={choosenChat} />}

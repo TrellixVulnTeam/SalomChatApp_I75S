@@ -1,5 +1,6 @@
 import { Input, Button } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 export interface register {
@@ -16,6 +17,7 @@ export const Register = ({ changeAuthStateToRegister }: any) => {
   });
 
   const [step, setStep] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const nextStep = () => {
     if (registration.Phone.length >= 9) {
@@ -40,6 +42,7 @@ export const Register = ({ changeAuthStateToRegister }: any) => {
       if (err) return console.log(err);
       console.log("Sent");
     });
+    changeAuthStateToRegister(false);
   };
 
   return (

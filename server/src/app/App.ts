@@ -1,9 +1,11 @@
 import bodyParser from "body-parser";
+import jwt from "jsonwebtoken";
 import sqlite3 from "sqlite3";
 import express from "express";
 import bcrypt from "bcrypt";
 import cors from "cors";
 import path from "path";
+
 const app = express();
 
 const dbPath = path.resolve(__dirname, "..", "db", "salom.db");
@@ -18,23 +20,29 @@ const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
   console.log("Database Connection!");
 });
 
-app.get("/", (req, res) => {
-  res.send("<h1>This is the DEV</h1>");
+// const verifyJWT = (request: any, response: any, next: any) => {
+//   const token: any = request.headers["x-access-token"];
 
-  const sql =
-    "INSERT INTO Users(Username, Phone, isOnline, lastOpened, newOpen, createdAt) VALUES(?,?,?,?,?,?)";
-  db.run(
-    sql,
-    ["Musawwir", 992985031200, true, new Date(), new Date(), new Date()],
-    () => {
-      console.log("Inserted!");
-    }
-  );
-});
+//   if (!token) {
+//     response.send("Token not found!");
+//   } else {
+//     jwt.verify(token, "jwtSecret", (err: any, decoded: any) => {
+//       if (err) {
+//         response.json({ auth: false, message: "Auth failed!" });
+//       } else {
+//         request.userid = decoded.id;
+//         next();
+//       }
+//     });
+//   }
+// };
 
-app.post("/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+// app.get("/isUserAuth", verifyJWT, (req, res) => {
+//   res.send("You are Authed!");
+// });
+
+app.post("/login", (req: any, res: any) => {
+  const { username, password } = req.body;
 
   const sqlLogin = `SELECT * FROM Users WHERE Username = ?`;
   db.all(sqlLogin, username, async (err: any, result: any) => {
@@ -45,10 +53,19 @@ app.post("/login", (req, res) => {
     if (result.length > 0) {
       bcrypt.compare(password, result[0].auth_pass, (error, response) => {
         if (response) {
-          res.send(result);
-          console.log(req);
+          const { id } = result[0];
+          const token = jwt.sign({ id }, "jwtSecret", {
+            expiresIn: 300,
+          });
+          req.session = result;
+
+          res.json({ auth: true, token: token, result: result });
+        } else {
+          res.json({ auth: false, message: "Wrong Username or Password!" });
         }
       });
+    } else {
+      res.json({ auth: false, message: "User not found!" });
     }
   });
 });
